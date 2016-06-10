@@ -1,0 +1,79 @@
+<!- Tic Tac Toe HTML -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="tictac.css">
+
+
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="question">
+                    <span>WOULD YOU LIKE TO BE:</span><span id="x"> "X"</span><span> or </span><span id="o"> "O"?</span>
+                </div>
+                <table class="table .table-responsive">
+
+
+                    <tbody>
+                        <tr>
+
+                            <td id="zero"></td>
+                            <td id="one"></td>
+                            <td id="two"></td>
+                        </tr>
+                        <tr>
+
+                            <td id="three"></td>
+                            <td id="four"></td>
+                            <td id="five"></td>
+                        </tr>
+                        <tr>
+
+                            <td id="six"></td>
+                            <td id="seven"></td>
+                            <td id="eight"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div class="col-sm-8 col-sm-offset-2">
+                   <span id="reset">
+                       RESET?
+                   </span> <br>
+                   <span id="result">
+                     
+                   </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="tictac.js"></script>
+</body>
+
+</html>
