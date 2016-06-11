@@ -25,19 +25,19 @@
         reset();
     });
 
-    $("#x").on("click", function (e) {
+    $("#x").on("click", function () {
         userChar = "X";
         computerChar = "O";
         $(".question").slideUp();
     });
 
-    $("#o").on("click", function (e) {
+    $("#o").on("click", function () {
         userChar = "O";
         computerChar = "X";
         $(".question").slideUp();
     });
 
-    $("td").on("click", function (e) {
+    $("td").on("click", function () {
         if (allowUserMove && userChar !== undefined && finished === false) {
             var currentClick = boardMap[$(this).attr("id")];
             var checkCurrentClick = boardIndexes[currentClick];
