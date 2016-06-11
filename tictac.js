@@ -152,9 +152,9 @@
             return blockingMove(e) !== 10;
         });
        (blockIndex.length > 0) ?  blockIndex = blockingMove(blockIndex[0]) : blockExists = false;
-        if (winExists || winIndex === 0) {
+        if (winExists) {
             return winIndex;
-        } else if (blockExists || blockIndex === 0) {
+        } else if (blockExists) {
             return blockIndex;
         } else {
             return randomMove(boardIndexes);;
