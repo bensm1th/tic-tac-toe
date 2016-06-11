@@ -151,7 +151,7 @@
         var blockIndex = wins.filter(function (e) {
             return blockingMove(e) !== 10;
         });
-        blockIndex = (blockIndex.length > 0) ? blockingMove(blockIndex[0]) : blockExists = false;
+       (blockIndex.length > 0) ?  blockIndex = blockingMove(blockIndex[0]) : blockExists = false;
         if (winExists || winIndex === 0) {
             return winIndex;
         } else if (blockExists || blockIndex === 0) {
