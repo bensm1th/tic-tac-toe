@@ -1,7 +1,7 @@
 /* tictac.js */
 (function () {
     var whoWon = 0;
-    var boardIndexes = ["a", "a", "a", "a", "a", "a", "a", "a", "a"];
+    var boardIndexes = ["blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank"];
     var allowUserMove = true;
     var finished = false;
     var userChar;
@@ -41,15 +41,15 @@
         if (allowUserMove && userChar !== undefined && finished === false) {
             var currentClick = boardMap[$(this).attr("id")];
             var checkBoard = boardIndexes[currentClick];
-            if (checkBoard === "a") {
+            if (checkBoard === "blank") {
                 userMoves++;
                 var displayUserMove = $(this).text(userChar);
                 allowUserMove = false;
-                boardIndexes[boardMap[$(this).attr("id")]] = "c";
+                boardIndexes[boardMap[$(this).attr("id")]] = "user";
                 winChecker();
                 if (whoWon !== 1 && whoWon !== 2) {
                     var nextComputerMove = computerMove();
-                    boardIndexes[nextComputerMove] = "b";
+                    boardIndexes[nextComputerMove] = "computer";
                     for (var prop in boardMap) {
                         if (boardMap[prop] === nextComputerMove) {
                             $("#" + prop).text(computerChar);
@@ -83,14 +83,14 @@
         var index3 = arr[2];
         var holder = boardIndexes[index1] + boardIndexes[index2] + boardIndexes[index3];
         var findComputerWin;
-        if (holder === "abb") {
+        if (holder === "blankcomputercomputer") {
             findComputerWin = index1;
-        } else if (holder === "bab") {
+        } else if (holder === "computerblankcomputer") {
             findComputerWin = index2;
-        } else if (holder === "bba") {
+        } else if (holder === "computercomputerblank") {
             findComputerWin = index3;
         } else {
-            findComputerWin = false;
+            findComputerWin = 10;
         }
         return findComputerWin;
     }
@@ -101,14 +101,14 @@
         var index3 = arr2[2];
         var holder = boardIndexes[index1] + boardIndexes[index2] + boardIndexes[index3];
         var findComputerBlock;
-        if (holder == "acc") {
+        if (holder == "blankuseruser") {
             findComputerBlock = index1;
-        } else if (holder == "cac") {
+        } else if (holder == "userblankuser") {
             findComputerBlock = index2;
-        } else if (holder == "cca") {
+        } else if (holder == "useruserblank") {
             findComputerBlock = index3;
         } else {
-            findComputerBlock = false;
+            findComputerBlock = 10;
         }
         return findComputerBlock;
     }
@@ -118,43 +118,43 @@
         var findComputerRandom;
         switch (userMoves) {
         case 1:
-            findComputerRandom = (boardIndexes[4] === "a") ? 4 : 0;
+            findComputerRandom = (boardIndexes[4] === "blank") ? 4 : 0;
             break;
         case 2:
-            if (boardIndexes[4] === "c" && (boardIndexes[2] === "c" || boardIndexes[6] === "c" || boardIndexes[8] === "c")) {
-                findComputerRandom = (boardIndexes[2] === "c") ? 6 : 2;
+            if (boardIndexes[4] === "user" && (boardIndexes[2] === "user" || boardIndexes[6] === "user" || boardIndexes[8] === "user")) {
+                findComputerRandom = (boardIndexes[2] === "computer") ? 6 : 2;
                 break;
             }
         default:
-            if (boardIndexes.indexOf("a") !== -1) {
+            if (boardIndexes.indexOf("blank") !== -1) {
                 while (!found) {
                     var randomIndex = Math.floor((Math.random() * boardIndexes.length));
-                    if (boardIndexes[randomIndex].indexOf("a") !== -1) {
+                    if (boardIndexes[randomIndex].indexOf("blank") !== -1) {
                         found = true;
                         findComputerRandom = randomIndex;
                     }
                 }
-            } else {
-                findComputerRandom = false;
-            }
+            } 
         }
         return findComputerRandom;
     }
 
     function computerMove() {
         allowUserMove = true;
+        var winExists = true;
+        var blockExists = true;
         var wins = [[0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6]];
         var winIndex = wins.filter(function (e) {
-            return winningMove(e) !== false;
+            return winningMove(e) !== 10;
         });
-        winIndex = (winIndex.length > 0) ? winningMove(winIndex[0]) : false;
+        (winIndex.length > 0) ? winIndex = winningMove(winIndex[0]) : winExists = false;
         var blockIndex = wins.filter(function (e) {
-            return blockingMove(e) !== false;
+            return blockingMove(e) !== 10;
         });
-        blockIndex = (blockIndex.length > 0) ? blockingMove(blockIndex[0]) : false;
-        if (winIndex || winIndex === 0) {
+        blockIndex = (blockIndex.length > 0) ? blockingMove(blockIndex[0]) : blockExists = false;
+        if (winExists || winIndex === 0) {
             return winIndex;
-        } else if (blockIndex || blockIndex === 0) {
+        } else if (blockExists || blockIndex === 0) {
             return blockIndex;
         } else {
             return randomMove(boardIndexes);;
@@ -167,9 +167,9 @@
         var index2 = arr3[1];
         var index3 = arr3[2];
         var holder = boardIndexes[index1] + boardIndexes[index2] + boardIndexes[index3];
-        if (holder == "bbb") {
+        if (holder == "computercomputercomputer") {
             determineWinner = 1;
-        } else if (holder == "ccc") {
+        } else if (holder == "useruseruser") {
             determineWinner = 2;
         } else {
             determineWinner = 0;
@@ -179,7 +179,7 @@
 
     function reset() {
         userMoves = 0;
-        boardIndexes = ["a", "a", "a", "a", "a", "a", "a", "a", "a"];
+        boardIndexes = ["blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank"];
         $("td").text("");
         finished = false;
         $("#result").text("");
