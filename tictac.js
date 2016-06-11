@@ -1,6 +1,6 @@
 /* tictac.js */
 (function () {
-    var whoWon = 0;
+    var whoWon = "no winner";
     var boardIndexes = ["blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank", "blank"];
     var allowUserMove = true;
     var finished = false;
@@ -40,14 +40,14 @@
     $("td").on("click", function (e) {
         if (allowUserMove && userChar !== undefined && finished === false) {
             var currentClick = boardMap[$(this).attr("id")];
-            var checkBoard = boardIndexes[currentClick];
-            if (checkBoard === "blank") {
+            var checkCurrentClick = boardIndexes[currentClick];
+            if (checkCurrentClick === "blank") {
                 userMoves++;
                 var displayUserMove = $(this).text(userChar);
                 allowUserMove = false;
                 boardIndexes[boardMap[$(this).attr("id")]] = "user";
                 winChecker();
-                if (whoWon !== 1 && whoWon !== 2) {
+                if (whoWon === "no winner") {
                     var nextComputerMove = computerMove();
                     boardIndexes[nextComputerMove] = "computer";
                     for (var prop in boardMap) {
@@ -56,10 +56,10 @@
                         }
                     }
                     winChecker();
-                    if (whoWon === 1) {
+                    if (whoWon === "computer wins") {
                         $("#result").text("Computer wins!");
                         finished = true;
-                    } else if (whoWon === 2) {
+                    } else if (whoWon === "user wins") {
                         $("#result").text("You win!");
                         allowUserMove = false;
                         finished = true;
@@ -157,7 +157,7 @@
         } else if (blockExists) {
             return blockIndex;
         } else {
-            return randomMove(boardIndexes);;
+            return randomMove(boardIndexes);
         }
     }
 
@@ -183,17 +183,24 @@
         $("td").text("");
         finished = false;
         $("#result").text("");
-        whoWon = 0;
+        whoWon = "no winner";
         allowUserMove = true;
     };
 
     function winChecker() {
         var wins = [[0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [2, 4, 6]];
+        var counter = 0;
         wins.forEach(function (e) {
             var focusNum = winner(e);
-            whoWon += focusNum;
-            return whoWon;
+            counter += focusNum;
+            return counter;
         });
-        return whoWon;
+        if (counter === 1) {
+            whoWon = "computer wins";
+        } else if (counter === 2) {
+            whoWon = "user wins";
+        } else if (counter === 0) {
+            whoWon = "no winner";
+        }
     }
 }());
